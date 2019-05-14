@@ -8,11 +8,12 @@ class Home extends StatelessWidget {
   final BaseAuth auth;
   final VoidCallback onSignedOut;
 
-  void _signOut(){
+  Future _signOut() async {
     try{
-
+      await auth.signOut();
+      onSignedOut();
     }catch(e){
-
+      print(e);
     }
 
   }
@@ -20,9 +21,12 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(appBar: AppBar(
+      backgroundColor: Colors.greenAccent,
       title: Text("Welcome to Keells"),
       actions: <Widget>[
-        FlatButton(
+        RaisedButton(
+          color: Colors.green,
+          elevation: 1.0,
           child: Text("SignOut"),
           onPressed: _signOut,
         )
