@@ -18,6 +18,9 @@ class MyApp extends StatelessWidget{
       debugShowCheckedModeBanner: false,
       title: "Go Flutter",
       home:Rootpage(auth: Auth()),
+      theme: ThemeData(
+        brightness: Brightness.dark
+      ),
       routes: <String, WidgetBuilder> {
           '/landingpage': (BuildContext context)=> MyApp(),
           '/login': (BuildContext context)=> Login(auth: Auth()),
