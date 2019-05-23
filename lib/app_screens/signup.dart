@@ -17,6 +17,8 @@ class _SignupState extends State<Signup> {
   
   String _email;
   String _password;
+//  String _nic;
+//  String _nexus;
 
   bool validatenSave(){
     final form = formkey.currentState;
@@ -34,9 +36,9 @@ class _SignupState extends State<Signup> {
     if(validatenSave()){
       try{
         String userId = await widget.auth.signUp(_email, _password);
+       // await widget.auth.userinfo(_nexus,_nic);
         print("signed in: $userId");
-        widget.onSignedIn();
-        //Navigator.of(context).pushNamed('/home');
+        Navigator.of(context).pushNamed('/home');
       }catch(e){
         print("Error $e");
       }
@@ -57,7 +59,7 @@ class _SignupState extends State<Signup> {
             TextFormField(
               decoration: InputDecoration(hintText: 'Enter profile name'),
               validator: (value) => value.isEmpty ? "Email can't be empty" : null,
-              onSaved: (value) => _email = value ,
+              onSaved: (value) => _email = value,
             ),
             SizedBox(height: 15.0),
             TextFormField(
@@ -66,8 +68,21 @@ class _SignupState extends State<Signup> {
               validator: (value) => value.length < 6 ? "password should atleast six figures long" : null,
               onSaved: (value) => _password = value ,
             ),
+           // SizedBox(height: 15.0),
+//            TextFormField(
+//              decoration: InputDecoration(hintText: 'Enter your NIC'),
+//              validator: (value) => value.isEmpty ? "NIC can't be empty" : null,
+//              onSaved: (value) => _nic = value ,
+//            ),
+//            SizedBox(height: 15.0),
+//            TextFormField(
+//              decoration: InputDecoration(hintText: 'Enter your Nexus number'),
+//              validator: (value) => value.isEmpty ? "Nexus number can't be empty" : null,
+//              onSaved: (value) => _nexus = value ,
+//            ),
             SizedBox(height: 15.0),
             RaisedButton(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
               elevation: 6.0,
               child: Text("Signup"),
               color: Colors.greenAccent,
@@ -78,6 +93,7 @@ class _SignupState extends State<Signup> {
             SizedBox(height: 15.0),
             Text("Don't have an account"),
             RaisedButton(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
               child: Text("Back to Login"),
               color: Colors.greenAccent,
               textColor: Colors.white,
