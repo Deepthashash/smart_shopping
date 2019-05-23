@@ -6,6 +6,7 @@ abstract class BaseAuth{
   Future<String> signIn(String email, String password);
   Future<String> currentUser();
   Future<void> signOut();
+ // Future<String> userinfo(String nic, String nexus);
 }
 
 class Auth implements BaseAuth{
@@ -26,4 +27,8 @@ class Auth implements BaseAuth{
   Future<void> signOut() async{
     return FirebaseAuth.instance.signOut();
   }
+
+//  Future<void> userinfo(String nic, String nexus) async{
+//    Firestore.instance.collection('testcrud').add(nic);
+//  }
 }

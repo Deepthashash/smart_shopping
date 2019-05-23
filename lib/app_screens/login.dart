@@ -67,6 +67,7 @@ class _LoginState extends State<Login> {
             ),
             SizedBox(height: 15.0),
             RaisedButton(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
               elevation: 6.0,
               child: Text("Login"),
               color: Colors.greenAccent,
@@ -77,6 +78,7 @@ class _LoginState extends State<Login> {
             SizedBox(height: 15.0),
             Text("Don't have an account"),
             RaisedButton(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
               child: Text("Signup"),
               color: Colors.greenAccent,
               textColor: Colors.white,

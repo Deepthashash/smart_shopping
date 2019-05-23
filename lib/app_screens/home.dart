@@ -38,17 +38,27 @@ class Home extends StatelessWidget {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          mini: true,
+//          mini: true,
           elevation: 12.0,
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushNamed('/billing');
+          },
           child: Icon(
-            Icons.scanner,
+            Icons.shopping_cart
           ),
           foregroundColor: Colors.white,
           backgroundColor: Colors.greenAccent,
         ),
-        body: Material(child: Column(children: <Widget>[])),
+        body: Material(child: Column(children: <Widget>[
+          Expanded(
+              child: Text("stocks"),
+          ),
+          Expanded(
+              child:   Text("discounts")
+          )
+        ])),
         drawer: Drawer(
+
           elevation: 1.0,
           child: ListView(
             children: <Widget>[
@@ -59,7 +69,7 @@ class Home extends StatelessWidget {
                   title: Text("Your Profile"),
                   trailing: Icon(Icons.account_box),
                   onTap: () {
-//                    Navigator.of(context).pop();
+                    Navigator.of(context).pushNamed('/profile');
                   }),
               ListTile(
                   title: Text("Promotions"),
@@ -70,7 +80,9 @@ class Home extends StatelessWidget {
               ListTile(
                   title: Text("Settings"),
                   trailing: Icon(Icons.settings),
-                  onTap: () {}),
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/settings');
+                  }),
             ],
           ),
         ));
