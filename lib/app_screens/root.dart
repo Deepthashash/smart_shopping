@@ -4,21 +4,17 @@ import 'login.dart';
 import 'home.dart';
 
 class Rootpage extends StatefulWidget {
-
   Rootpage({this.auth});
+
   final BaseAuth auth;
 
   @override
   State<StatefulWidget> createState() => _RootPageState();
 }
 
-enum AuthStatus{
-  notSignedIn,
-  signedIn
-}
+enum AuthStatus { notSignedIn, signedIn }
 
-class _RootPageState extends State<Rootpage>{
-
+class _RootPageState extends State<Rootpage> {
   AuthStatus authStatus = AuthStatus.notSignedIn;
 
   @override
@@ -26,7 +22,8 @@ class _RootPageState extends State<Rootpage>{
     super.initState();
     widget.auth.currentUser().then((userId) {
       setState(() {
-        authStatus = userId == null ? AuthStatus.notSignedIn : AuthStatus.signedIn;
+        authStatus =
+            userId == null ? AuthStatus.notSignedIn : AuthStatus.signedIn;
       });
     });
   }
@@ -45,12 +42,11 @@ class _RootPageState extends State<Rootpage>{
 
   @override
   Widget build(BuildContext context) {
-    switch (authStatus){
+    switch (authStatus) {
       case AuthStatus.notSignedIn:
         return Login(auth: widget.auth, onSignedIn: _signedIn);
       case AuthStatus.signedIn:
         return Home(auth: widget.auth, onSignedOut: _signedOut);
     }
   }
-
 }

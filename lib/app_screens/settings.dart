@@ -21,9 +21,8 @@ class Settings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.greenAccent,
-          title: Text("Settings"),
-        )
-    );
+      backgroundColor: Colors.greenAccent,
+      title: Text("Settings"),
+    ));
   }
 }

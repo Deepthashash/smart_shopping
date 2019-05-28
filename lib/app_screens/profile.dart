@@ -21,9 +21,8 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-        backgroundColor: Colors.greenAccent,
-        title: Text("Profile"),
-        )
-    );
+      backgroundColor: Colors.greenAccent,
+      title: Text("Profile"),
+    ));
   }
 }

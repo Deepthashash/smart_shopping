@@ -43,22 +43,18 @@ class Home extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pushNamed('/billing');
           },
-          child: Icon(
-            Icons.shopping_cart
-          ),
+          child: Icon(Icons.shopping_cart),
           foregroundColor: Colors.white,
           backgroundColor: Colors.greenAccent,
         ),
-        body: Material(child: Column(children: <Widget>[
+        body: Material(
+            child: Column(children: <Widget>[
           Expanded(
-              child: Text("stocks"),
+            child: Text("stocks"),
           ),
-          Expanded(
-              child:   Text("discounts")
-          )
+          Expanded(child: Text("discounts"))
         ])),
         drawer: Drawer(
-
           elevation: 1.0,
           child: ListView(
             children: <Widget>[
