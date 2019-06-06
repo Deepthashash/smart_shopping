@@ -49,6 +49,7 @@ class _LoginState extends State<Login> {
     if (validatenSave()) {
       try {
         String userId = await widget.auth.signIn(_email, _password);
+
         print("signed in: $userId");
         widget.onSignedIn();
         // Navigator.of(context).pushNamed('/home');
@@ -134,7 +135,7 @@ class _LoginState extends State<Login> {
                       ),
                       SizedBox(height: 15.0),
                       RaisedButton(
-                          shape: RoundedRectangleBorder(
+                          shape: BeveledRectangleBorder(
                               borderRadius: BorderRadius.circular(30.0)),
                           elevation: 6.0,
                           child: Text("Login"),
@@ -145,7 +146,7 @@ class _LoginState extends State<Login> {
                       SizedBox(height: 15.0),
                       Text("Don't have an account"),
                       RaisedButton(
-                          shape: RoundedRectangleBorder(
+                          shape: BeveledRectangleBorder(
                               borderRadius: BorderRadius.circular(30.0)),
                           child: Text("Signup"),
                           color: Colors.greenAccent,
@@ -205,7 +206,7 @@ class _LoginState extends State<Login> {
                       ),
                       SizedBox(height: 15.0),
                       RaisedButton(
-                        shape: RoundedRectangleBorder(
+                        shape: BeveledRectangleBorder(
                             borderRadius: BorderRadius.circular(30.0)),
                         elevation: 6.0,
                         child: Text("Signup"),
@@ -217,7 +218,7 @@ class _LoginState extends State<Login> {
                       SizedBox(height: 15.0),
                       Text("Don't have an account"),
                       RaisedButton(
-                          shape: RoundedRectangleBorder(
+                          shape: BeveledRectangleBorder(
                               borderRadius: BorderRadius.circular(30.0)),
                           child: Text("Back to Login"),
                           color: Colors.greenAccent,
