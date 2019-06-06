@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'auth.dart';
 
 class Home extends StatelessWidget {
@@ -10,8 +9,8 @@ class Home extends StatelessWidget {
 
   Future _signOut() async {
     try {
-      await auth.signOut();
       onSignedOut();
+      await auth.signOut();
     } catch (e) {
       print(e);
     }

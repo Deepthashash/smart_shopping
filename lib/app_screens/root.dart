@@ -20,6 +20,7 @@ class _RootPageState extends State<Rootpage> {
   @override
   void initState() {
     super.initState();
+    
     widget.auth.currentUser().then((userId) {
       setState(() {
         authStatus =

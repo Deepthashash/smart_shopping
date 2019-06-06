@@ -1,9 +1,10 @@
 import 'auth.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'services.dart';
 
 class Signup extends StatefulWidget {
   Signup({this.auth, this.onSignedIn});
+  
 
   final BaseAuth auth;
   final VoidCallback onSignedIn;
@@ -14,7 +15,7 @@ class Signup extends StatefulWidget {
 
 class _SignupState extends State<Signup> {
   final formkey = GlobalKey<FormState>();
-
+  Services ser= new Services();
   String _email;
   String _password;
   String _nic;
@@ -31,15 +32,13 @@ class _SignupState extends State<Signup> {
     }
   }
 
-  void validatenSubmit() async {
-    print("Hello");
+  void validatenSubmit2() async {
     if (validatenSave()) {
       try {
         String userId = await widget.auth.signUp(_email, _password);
-        // await widget.auth.userinfo(_nexus,_nic);
         print("signed in: $userId");
-        createData(_nic, _nexus, userId);
-        Navigator.of(context).pushNamed('/home');
+        ser.createData(_nic, _nexus, userId);
+        widget.onSignedIn();
       } catch (e) {
         print("Error $e");
       }
@@ -47,17 +46,7 @@ class _SignupState extends State<Signup> {
       print("error");
   }
 
-  createData(_nic, _nexus, userId) {
-    DocumentReference docref = Firestore.instance.document("Data/userData");
-    Map<String, dynamic> details = {
-      "userId": userId,
-      "NIC": _nic,
-      "Nexus": _nexus
-    };
-    docref.setData(details).whenComplete(() {
-      print("done");
-    });
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
