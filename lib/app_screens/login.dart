@@ -16,7 +16,7 @@ enum FormType { login, signup }
 
 class _LoginState extends State<Login> {
   final formkey = GlobalKey<FormState>();
-  Services ser = new Services();
+  Services ser =  Services();
   String _email;
   String _password;
   String _nic;
@@ -81,6 +81,7 @@ class _LoginState extends State<Login> {
         print("signed in: $userId");
         ser.createData(_nic, _nexus, userId,_email);
         widget.onSignedIn();
+        
       } catch (e) {
         print("Error $e");
         showDialog(
@@ -108,7 +109,7 @@ class _LoginState extends State<Login> {
     if (_formType == FormType.login) {
       return Scaffold(
           appBar: AppBar(
-            title: Text("Keells"),
+            title: Text("Smart Shopping"),
             backgroundColor: Colors.greenAccent,
           ),
           body: Center(
@@ -174,7 +175,7 @@ class _LoginState extends State<Login> {
                     children: <Widget>[
                       TextFormField(
                         decoration:
-                            InputDecoration(hintText: 'Enter profile name'),
+                            InputDecoration(hintText: 'Enter your email'),
                         validator: (value) =>
                             value.isEmpty ? "Email can't be empty" : null,
                         onSaved: (value) => _email = value,

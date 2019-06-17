@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 //pages
 import './app_screens/login.dart';
-import './app_screens/signup.dart';
 import './app_screens/home.dart';
 import './app_screens/auth.dart';
 import './app_screens/root.dart';
@@ -27,7 +26,6 @@ class MyApp extends StatelessWidget{
       routes: <String, WidgetBuilder> {
           '/landingpage': (BuildContext context)=> MyApp(),
           '/login': (BuildContext context)=> Login(auth: Auth()),
-          '/signup': (BuildContext context)=> Signup(auth: Auth()),
           '/home': (BuildContext context)=> Home(),
           '/billing': (BuildContext context)=> Billing(),
           '/profile': (BuildContext context)=> Profile(),
