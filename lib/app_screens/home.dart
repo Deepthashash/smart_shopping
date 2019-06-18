@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'auth.dart';
 
@@ -7,6 +6,13 @@ class Home extends StatelessWidget {
 
   final BaseAuth auth;
   final VoidCallback onSignedOut;
+
+  BoxDecoration myBoxDecoration() {
+    return BoxDecoration(
+      border: Border.all(width: 2),
+      
+    );
+  }
 
   Future _signOut() async {
     try {
@@ -50,10 +56,69 @@ class Home extends StatelessWidget {
         body: Material(
             child: Column(children: <Widget>[
           Expanded(
-            child: Text("stocks"),
+            child: Container(
+              decoration: myBoxDecoration(),
+              // child: Text("stocks"),
+              child: GridView.count(
+                primary: false,
+                padding: const EdgeInsets.all(5.0),
+                crossAxisSpacing: 5.0,
+                crossAxisCount: 3,
+                children: <Widget>[
+                  Container(
+                    alignment: Alignment.center,
+                    decoration: myBoxDecoration(),
+                    child: Text("Hello"),
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    decoration: myBoxDecoration(),
+                    child: Text("Hello"),
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    decoration: myBoxDecoration(),
+                    child: Text("Hello"),
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    decoration: myBoxDecoration(),
+                    child: Text("Hello"),
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    decoration: myBoxDecoration(),
+                    child: Text("Hello"),
+                  ),
+                ],
+              ),
+            ),
           ),
-          Expanded(child: Text("discounts"))
-        ])),
+          Expanded(
+            child: Container(
+              decoration: myBoxDecoration(),
+              // child: Text("stocks"),
+              child: CustomScrollView(
+  primary: false,
+  slivers: <Widget>[
+    SliverPadding(
+      padding: const EdgeInsets.all(20.0),
+      sliver: SliverGrid.count(
+        crossAxisSpacing: 10.0,
+        crossAxisCount: 2,
+        children: <Widget>[
+          const Text('He\'d have you all unravel at the'),
+          const Text('Heed not the rabble'),
+          const Text('Sound of screams but the'),
+          const Text('Who scream'),
+          const Text('Revolution is coming...'),
+          const Text('Revolution, they...'),
+        ],
+      ),
+    ),
+  ],
+)
+            ))])),
         drawer: Drawer(
           elevation: 1.0,
           child: ListView(

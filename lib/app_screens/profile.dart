@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'services.dart';
 
 class Profile extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
   DocumentSnapshot snpshot;
-  Services ser =  Services();
+  Services ser = Services();
 
 //   @override
 //   void initState(){
@@ -23,70 +22,122 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.greenAccent,
-          title: Text("Profile"),
-        ),
-            body: _profData(), 
-        //     ListView(
-        //   children: <Widget>[
-        //     Text(emailg),
-        //     StreamBuilder(
-        //       stream: Firestore.instance
-        //           .collection("Data")
-        //           .document(emailg)
-        //           .snapshots(),
-        //       builder: (BuildContext context,
-        //           AsyncSnapshot<DocumentSnapshot> snapshot) {
-        //         if (!snapshot.hasData)
-        //           return new Container(
-        //               child: Center(
-        //             child: Text("Loading..."),
-        //           ));
+      appBar: AppBar(
+        backgroundColor: Colors.greenAccent,
+        title: Text("Profile"),
+      ),
+      body: _profData(),
+      //     ListView(
+      //   children: <Widget>[
+      //     Text(emailg),
+      //     StreamBuilder(
+      //       stream: Firestore.instance
+      //           .collection("Data")
+      //           .document(emailg)
+      //           .snapshots(),
+      //       builder: (BuildContext context,
+      //           AsyncSnapshot<DocumentSnapshot> snapshot) {
+      //         if (!snapshot.hasData)
+      //           return new Container(
+      //               child: Center(
+      //             child: Text("Loading..."),
+      //           ));
 
-        //         return TaskList(documents: snapshot.data.documents);
-        //       },
-        //     )
-        //   ],
-        // )
-        );
+      //         return TaskList(documents: snapshot.data.documents);
+      //       },
+      //     )
+      //   ],
+      // )
+    );
   }
+
   @override
   void initState() {
     super.initState();
-    ser.getData().then((results){ 
-      print(results); 
+    ser.getData().then((results) {
+      print(results);
       setState(() {
         snpshot = results;
       });
     });
   }
 
-  Widget _profData(){
-    if(snpshot != null){
-      return ListView(children: <Widget>[
-        
-       Text(snpshot.data["NIC"]),
-       Text(snpshot.data["Nexus"])
-      ],
-        //Container()
+  Widget _profData() {
+    if (snpshot != null) {
+      return ListView(
+        children: <Widget>[
+          SizedBox( 
+            height: 150.0,
+            child: Container(
+              decoration: BoxDecoration(
+          image: DecorationImage(
+            image:  ExactAssetImage('assets/dog.png'),
+            fit: BoxFit.cover,
+          ),
+              ),
+              alignment: Alignment.center,
+              width: 50.0,
+              height: 50.0,
+              child: Text("Prof pic comes here"),
+            ),
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                  child: ListTile(
+                title: Text("Profile name"),
+                subtitle: Text(snpshot.data["profname"]),
+              )),
+              Expanded(
+                  child: Container(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () {
+                    print("filled background");
+                  },
+                ),
+              )),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                  child: ListTile(
+                title: Text("NIC number"),
+                subtitle: Text(snpshot.data["NIC"]),
+              )),
+              Expanded(
+                  child: Container(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  icon: Icon(Icons.lock_outline),
+                ),
+              )),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                  child: ListTile(
+                title: Text("Nexus card number"),
+                subtitle: Text(snpshot.data["Nexus"]),
+              )),
+              Expanded(
+                  child: Container(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  icon: Icon(Icons.lock_outline),
+                ),
+              )),
+            ],
+          )
+        ],
       );
-      // return ListView.builder(
-      //   itemCount: snpshot.documents.length,
-      //   padding: EdgeInsets.all(5.0),
-      //   itemBuilder: (BuildContext context, int i){
-      //     return ListTile(
-      //       title: Text(snpshot.documents[i].data["NIC"].toString()),
-      //     );
-      //   },
-      // );
-    }else{
+    } else {
       return (Center(child: CircularProgressIndicator()));
     }
   }
-
- 
-
 }
 //  class TaskList extends StatelessWidget {
 //   TaskList({this.documents});

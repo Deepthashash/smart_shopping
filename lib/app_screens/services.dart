@@ -4,9 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 class Services{
 
   FirebaseUser user;
-    createData(_nic, _nexus, userId,_email) {
+    createData(_name,_nic, _nexus, userId,_email) {
     DocumentReference docref = Firestore.instance.document("Users/$_email");
     Map<String, dynamic> details = {
+      "profname": _name,
       "userId": userId,
       "NIC": _nic,
       "Nexus": _nexus

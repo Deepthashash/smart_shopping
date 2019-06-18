@@ -17,6 +17,7 @@ enum FormType { login, signup }
 class _LoginState extends State<Login> {
   final formkey = GlobalKey<FormState>();
   Services ser =  Services();
+  String _name;
   String _email;
   String _password;
   String _nic;
@@ -79,7 +80,7 @@ class _LoginState extends State<Login> {
       try {
         String userId = await widget.auth.signUp(_email, _password);
         print("signed in: $userId");
-        ser.createData(_nic, _nexus, userId,_email);
+        ser.createData(_name,_nic, _nexus, userId,_email);
         widget.onSignedIn();
         
       } catch (e) {
@@ -173,6 +174,14 @@ class _LoginState extends State<Login> {
                     shrinkWrap: true,
                     padding: const EdgeInsets.all(25.0),
                     children: <Widget>[
+                      TextFormField(
+                        decoration:
+                            InputDecoration(hintText: 'Enter Name'),
+                        validator: (value) =>
+                            value.isEmpty ? "Name can't be empty" : null,
+                        onSaved: (value) => _name = value,
+                      ),
+                      SizedBox(height: 15.0),
                       TextFormField(
                         decoration:
                             InputDecoration(hintText: 'Enter your email'),
