@@ -7,7 +7,6 @@ import './app_screens/auth.dart';
 import './app_screens/root.dart';
 import './app_screens/billing.dart';
 import './app_screens/profile.dart';
-import './app_screens/settings.dart';
 
 void main(){
   runApp( MyApp());
@@ -29,7 +28,6 @@ class MyApp extends StatelessWidget{
           '/home': (BuildContext context)=> Home(),
           '/billing': (BuildContext context)=> Billing(),
           '/profile': (BuildContext context)=> Profile(),
-          '/settings': (BuildContext context)=> Settings(),
         }
     );
   }
