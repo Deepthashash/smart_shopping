@@ -17,10 +17,10 @@ class MyApp extends StatelessWidget{
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Go Flutter",
+      title: "Smart Shopping",
       home:Rootpage(auth: Auth()),
       theme: ThemeData(
-        brightness: Brightness.dark
+        brightness: Brightness.light
       ),
       routes: <String, WidgetBuilder> {
           '/landingpage': (BuildContext context)=> MyApp(),
