@@ -50,7 +50,24 @@ class Home extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).pushNamed('/settings');
                   }),
-            ],
+               ListTile(
+                  title: Text("SignOut"),
+                  trailing: Icon(Icons.account_box),
+                  onTap: () {
+                    _signOut();
+                  }),
+              RaisedButton(
+                    color: Colors.black87,
+                    shape: RoundedRectangleBorder(
+                        side: BorderSide(color: Colors.white)),
+                    elevation: 1.0,
+                    child: Text(
+                      "SignOut",
+                    ),
+                    textColor: Colors.white,
+                    onPressed: _signOut,
+                  ),
+                ],
           ),
         ),
       floatingActionButton: FloatingActionButton(
@@ -71,19 +88,7 @@ class Home extends StatelessWidget {
                 expandedHeight: 200.0,
                 floating: true,
                 pinned: false,
-                actions: <Widget>[
-                  RaisedButton(
-                    color: Colors.black87,
-                    shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Colors.white)),
-                    elevation: 1.0,
-                    child: Text(
-                      "SignOut",
-                    ),
-                    textColor: Colors.white,
-                    onPressed: _signOut,
-                  ),
-                ],
+                
                 flexibleSpace: FlexibleSpaceBar(
                     centerTitle: true,
                     titlePadding: EdgeInsets.only(bottom: 80.0),
@@ -95,10 +100,7 @@ class Home extends StatelessWidget {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    background: Image.network(
-                      "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&h=350",
-                      fit: BoxFit.cover,
-                    )),
+                    background: Image.asset("assets/images/image2.jpg")),
                 bottom: TabBar(
                   labelColor: Colors.black87,
                   unselectedLabelColor: Colors.grey,
@@ -121,7 +123,7 @@ class Home extends StatelessWidget {
                 primary: false,
                 padding: const EdgeInsets.all(5.0),
                 crossAxisSpacing: 5.0,
-                crossAxisCount: 3,
+                crossAxisCount: 2,
                 children: <Widget>[
                   Container(
                     alignment: Alignment.center,
@@ -189,7 +191,7 @@ class Home extends StatelessWidget {
                 primary: false,
                 padding: const EdgeInsets.all(5.0),
                 crossAxisSpacing: 5.0,
-                crossAxisCount: 3,
+                crossAxisCount: 2,
                 children: <Widget>[
                   Container(
                     alignment: Alignment.center,

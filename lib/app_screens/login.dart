@@ -134,7 +134,7 @@ class _LoginState extends State<Login> {
                         hasFloatingPlaceholder: true,
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Colors.lightBlueAccent,
+                            color: Colors.blueAccent,
                             width: 4,
                           ),
                           borderRadius:
@@ -150,7 +150,7 @@ class _LoginState extends State<Login> {
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Colors.blueAccent,
+                            color: Colors.lightBlueAccent,
                             width: 4,
                           ),
                           borderRadius:
@@ -182,7 +182,7 @@ class _LoginState extends State<Login> {
                         hasFloatingPlaceholder: true,
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Colors.lightBlueAccent,
+                            color: Colors.blueAccent,
                             width: 4,
                           ),
                           borderRadius:
@@ -198,7 +198,7 @@ class _LoginState extends State<Login> {
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Colors.blueAccent,
+                            color: Colors.lightBlueAccent,
                             width: 4,
                           ),
                           borderRadius:
@@ -305,8 +305,8 @@ class _LoginState extends State<Login> {
                       ),
                       SizedBox(height: 15.0),
                       RaisedButton(
-                        shape: BeveledRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0)),
                         elevation: 6.0,
                         child: Text("Signup"),
                         color: Colors.greenAccent,
@@ -317,8 +317,8 @@ class _LoginState extends State<Login> {
                       SizedBox(height: 15.0),
                       Text("Don't have an account"),
                       RaisedButton(
-                          shape: BeveledRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0)),
                           child: Text("Back to Login"),
                           color: Colors.greenAccent,
                           textColor: Colors.white,
