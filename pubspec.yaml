@@ -19,6 +19,9 @@ environment:
 dependencies:
   firebase_auth: ^0.8.4
   cloud_firestore:
+  flutter_barcode_scanner:
+  image_picker:
+    
 
   flutter:
     sdk: flutter
