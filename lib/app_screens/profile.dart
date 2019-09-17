@@ -66,21 +66,21 @@ class _ProfileState extends State<Profile> {
     if (snpshot != null) {
       return ListView(
         children: <Widget>[
-          SizedBox( 
-            height: 150.0,
-            child: Container(
-              decoration: BoxDecoration(
-          image: DecorationImage(
-            image:  ExactAssetImage('assets/dog.png'),
-            fit: BoxFit.cover,
-          ),
-              ),
-              alignment: Alignment.center,
-              width: 50.0,
-              height: 50.0,
-              child: Text("Prof pic comes here"),
-            ),
-          ),
+          // SizedBox( 
+          //   height: 150.0,
+          //   child: Container(
+          //     decoration: BoxDecoration(
+          // image: DecorationImage(
+          //   image:  ExactAssetImage('assets/dog.png'),
+          //   fit: BoxFit.cover,
+          // ),
+          //     ),
+          //     alignment: Alignment.center,
+          //     width: 50.0,
+          //     height: 50.0,
+          //     child: Text("Prof pic comes here"),
+          //   ),
+          // ),
           Row(
             children: <Widget>[
               Expanded(
@@ -120,8 +120,24 @@ class _ProfileState extends State<Profile> {
             children: <Widget>[
               Expanded(
                   child: ListTile(
-                title: Text("Nexus card number"),
+                title: Text("Card number"),
                 subtitle: Text(snpshot.data["Nexus"]),
+              )),
+              Expanded(
+                  child: Container(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  icon: Icon(Icons.lock_outline),
+                ),
+              )),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                  child: ListTile(
+                title: Text("Wallet Balance"),
+                subtitle: Text(snpshot.data["Wallet_balance"].toString()),
               )),
               Expanded(
                   child: Container(

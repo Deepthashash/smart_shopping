@@ -21,7 +21,7 @@ class _LoginState extends State<Login> {
   Services ser = Services();
   String _name;
   String _email;
-  String _password;
+  String _password; 
   String _nic;
   String _nexus;
   FormType _formType = FormType.login;

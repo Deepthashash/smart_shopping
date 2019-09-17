@@ -23,4 +23,6 @@ class Services{
     // return user.email;
     return await Firestore.instance.collection("Users").document(user.email).get();
   }
+
+  
 }

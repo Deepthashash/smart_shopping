@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class Home extends StatelessWidget {
  Home({this.auth, this.onSignedOut});
+
+
+ 
 
  final BaseAuth auth;
  final VoidCallback onSignedOut;
@@ -18,7 +23,14 @@ class Home extends StatelessWidget {
 
   BoxDecoration myBoxDecoration() {
     return BoxDecoration(
-      border: Border.all(width: 2),
+      border: Border.all(width: 0),
+    );
+  }
+
+  Widget _buidList(BuildContext context, DocumentSnapshot document){
+    return ListTile(
+      title: Text(document['brand']),
+      subtitle: Text(document['price'].toString()),          
     );
   }
 
@@ -29,9 +41,17 @@ class Home extends StatelessWidget {
           elevation: 1.0,
           child: ListView(
             children: <Widget>[
-              ListTile(
-                title: Text("Keells"),
-              ),
+              DrawerHeader(
+              margin: EdgeInsets.only(bottom: 2.0),
+              // padding: EdgeInsets.all(5.0),
+              child: Text('Smart Shopping',
+              style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 35.0,)),
+              decoration: BoxDecoration(
+              color: Colors.blue,
+              )
+              ),              
               ListTile(
                   title: Text("Your Profile"),
                   trailing: Icon(Icons.account_box),
@@ -39,22 +59,10 @@ class Home extends StatelessWidget {
                     Navigator.of(context).pushNamed('/profile');
                   }),
               ListTile(
-                  title: Text("Promotions"),
-                  trailing: Icon(Icons.shopping_cart),
-                  onTap: () {
-//                    Navigator.of(context).pop();
-                  }),
-              ListTile(
                   title: Text("Settings"),
                   trailing: Icon(Icons.settings),
                   onTap: () {
                     Navigator.of(context).pushNamed('/settings');
-                  }),
-               ListTile(
-                  title: Text("SignOut"),
-                  trailing: Icon(Icons.account_box),
-                  onTap: () {
-                    _signOut();
                   }),
               RaisedButton(
                     color: Colors.black87,
@@ -111,7 +119,7 @@ class Home extends StatelessWidget {
                     ),
                     Tab(
                         //icon:  Icon(Icons.info),
-                        text: "Promotions"),
+                        text: "Pre-order"),
                   ],
                 ),
               ),
@@ -128,7 +136,7 @@ class Home extends StatelessWidget {
                   Container(
                     alignment: Alignment.center,
                     decoration: myBoxDecoration(),
-                    child: Text("Hello"),
+                    child: Image.asset("assets/images/image2.jpg")
                   ),
                   Container(
                     alignment: Alignment.center,
@@ -187,74 +195,18 @@ class Home extends StatelessWidget {
                   ),
                 ],
               ),
-              GridView.count(
-                primary: false,
-                padding: const EdgeInsets.all(5.0),
-                crossAxisSpacing: 5.0,
-                crossAxisCount: 2,
-                children: <Widget>[
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: myBoxDecoration(),
-                    child: Text("Hello"),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: myBoxDecoration(),
-                    child: Text("Hello"),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: myBoxDecoration(),
-                    child: Text("Hello"),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: myBoxDecoration(),
-                    child: Text("Hello"),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: myBoxDecoration(),
-                    child: Text("Hello"),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: myBoxDecoration(),
-                    child: Text("Hello"),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: myBoxDecoration(),
-                    child: Text("Hello"),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: myBoxDecoration(),
-                    child: Text("Hello"),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: myBoxDecoration(),
-                    child: Text("Hello"),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: myBoxDecoration(),
-                    child: Text("Hello"),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: myBoxDecoration(),
-                    child: Text("Hello"),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: myBoxDecoration(),
-                    child: Text("Hello"),
-                  ),
-                ],
-              ),
+              StreamBuilder(
+                stream: Firestore.instance.collection("Barcode_details").snapshots(),
+                builder: (context, snapshots){
+                  if(!snapshots.hasData) return const Text("Loading...");   
+                  return ListView.builder(
+                    itemExtent: 80.0,
+                    itemCount: snapshots.data.documents.length,
+                    itemBuilder: (context, index) =>
+                      _buidList(context, snapshots.data.documents[index]),
+                  );
+                },
+              )
           
             ],
           ),
@@ -263,3 +215,4 @@ class Home extends StatelessWidget {
     );
   }
 }
+

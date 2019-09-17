@@ -10,7 +10,7 @@ class Billing extends StatefulWidget {
 
 class _Billing extends State<Billing> {
   var barcode = '';
-  Map details = {};
+  DocumentSnapshot qs;
   Widget detailsWidget = Expanded(
     child:ListView(
       children: <Widget>[
@@ -63,91 +63,30 @@ class _Billing extends State<Billing> {
       ],
     ),
   );
-  Map detailsKeys = {
-    "barcode": "Barcode :",
-    "brand": "Brand :",
-    "price": "Price ",
-    "expiryDate": "Expire date :",
-  };
+ 
 
-  renderWidget(QuerySnapshot qs) {
-    if (qs.documents.length == 0) return Text('No item found for the barcode');
-
-    List<Widget> rowWidgets = detailsKeys.keys
-        .map(
-          (k) => qs.documents[0].data[k] != null
-              ? Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Expanded(child: Text(detailsKeys[k])),
-                    Expanded(
-                      child: k != 'materials'
-                          ? Text(qs.documents[0].data[k])
-                          : Wrap(
-                              children: qs.documents[0].data[k]
-                                  .map<Widget>(
-                                    (item) => Padding(
-                                      padding: EdgeInsets.fromLTRB(3, 0, 3, 0),
-                                      child: Chip(
-                                        label: Text(item),
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
-                            ),
-                    ),
-                  ],
-                )
-              : SizedBox.shrink(),
-        )
-        .toList();
-    return Container(
-      padding: EdgeInsets.all(10),
-      child: Column(
-        children: <Widget>[
-          Text(
-            qs.documents[0].data['itemName'] ?? "No Name",
-            style: TextStyle(fontSize: 20),
-          ),
-          Container(
-            height: 20,
-            width: double.infinity,
-          ),
-          Column(
-            children: rowWidgets,
-          ),
-        ],
-      ),
-    );
-  }
-
+  
   onBarcode(barcode, context) async {
-    showDialog(
-      builder: (context) => Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          CircularProgressIndicator(),
-        ],
-      ),
-      context: context,
-      barrierDismissible: false,
-    );
-    QuerySnapshot qs = await Firestore.instance
-        .collection('items')
-        .where('barcode', isEqualTo: barcode)
-        .limit(1)
-        .getDocuments();
-    setState(() {
-      detailsWidget = renderWidget(qs);
-    });
-    Navigator.pop(context);
+    // showDialog(
+    //   builder: (context) => Column(
+    //     crossAxisAlignment: CrossAxisAlignment.center,
+    //     mainAxisAlignment: MainAxisAlignment.center,
+    //     children: <Widget>[
+    //       CircularProgressIndicator(),
+    //     ],
+    //   ),
+    //   context: context,
+    //   barrierDismissible: false,
+    // );
+    qs = await Firestore.instance
+        .collection('Barcode_details')
+        .document(barcode).get();
   }
 
   onScan(context) async {
     try {
-      String barcode =
-          await FlutterBarcodeScanner.scanBarcode('#34eb7d', 'close', true);
+      String barcode = "123456789";
+          // await FlutterBarcodeScanner.scanBarcode('#34eb7d', 'close', true);
       setState(() {
         this.barcode = barcode;
       });
@@ -163,20 +102,7 @@ class _Billing extends State<Billing> {
       appBar: AppBar(
         title: Text('Scan here'),
       ),
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            // Center(
-            //   child: RaisedButton(
-            //     child: Text("Set manually"),
-            //     onPressed: () => onBarcode("725272730706",context),
-            //     // onPressed: () => onBarcode("testing123", context),
-            //   ),
-            // ),
-            detailsWidget
-          ],
-        ),
-      ),
+      body: _barData(qs),
       floatingActionButton: FloatingActionButton(
         onPressed: () => onScan(context),
         child: Icon(Icons.scanner),
@@ -184,3 +110,34 @@ class _Billing extends State<Billing> {
     );
   }
 }
+
+  Widget _barData(qs) {
+    if (qs != null) {
+      return ListView(
+        children: <Widget>[
+            Row(
+            children: <Widget>[
+              Expanded(
+                  child: ListTile(
+                title: Text(qs.data["brand"]),
+                subtitle: Text("Rs." + qs.data["price"].toString()),
+              )),
+              Expanded(
+                  child: Container(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () {
+                  },
+                ),
+              )),
+            ],
+          ),
+          
+        ],
+      );
+    } else {
+      return (Center(child: Text("No Data!!")));
+    }
+  }
+

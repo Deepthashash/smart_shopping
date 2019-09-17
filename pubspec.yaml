@@ -21,6 +21,8 @@ dependencies:
   cloud_firestore:
   flutter_barcode_scanner:
   image_picker:
+  dropdownfield:
+  nice_button:
     
 
   flutter:
