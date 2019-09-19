@@ -7,10 +7,20 @@ class Home extends StatelessWidget {
  Home({this.auth, this.onSignedOut});
 
 
- 
 
  final BaseAuth auth;
  final VoidCallback onSignedOut;
+ int quantity;
+ int finalPrice;
+ int unitPrice;
+ String q;
+
+// look forward to implement
+//  calculatePrice(String q, int unitPrice){
+//    quantity = int.parse(q);
+//    finalPrice = finalPrice + (quantity * unitPrice);
+//    print("finalPrice");
+//  }
 
  Future _signOut() async {
    try {
@@ -28,11 +38,59 @@ class Home extends StatelessWidget {
   }
 
   Widget _buidList(BuildContext context, DocumentSnapshot document){
-    return ListTile(
-      title: Text(document['brand']),
-      subtitle: Text(document['price'].toString()),          
+    
+    return Row(
+      // crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Expanded(child: ListTile(
+          title: Text(document['brand']),
+          subtitle: Text("Rs. "+document['price'].toString()),          
+          )),
+        Expanded(
+          child: Container(
+            alignment: Alignment.centerRight,
+            child: IconButton( 
+              icon: Icon(Icons.add),
+              onPressed: () =>_showDialog(context, document),
+              )
+              ),
+              )
+        
+      ],
     );
   }
+
+    void _showDialog(context, document) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title:  Text("Enter the quantity"),
+          content:  TextFormField(
+            onSaved: (value) => q = value,
+          ),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+             FlatButton(
+              child:  Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+             FlatButton(
+              child: Text("Add"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -198,7 +256,7 @@ class Home extends StatelessWidget {
               StreamBuilder(
                 stream: Firestore.instance.collection("Barcode_details").snapshots(),
                 builder: (context, snapshots){
-                  if(!snapshots.hasData) return const Text("Loading...");   
+                  if(!snapshots.hasData) return Center(child: CircularProgressIndicator());   
                   return ListView.builder(
                     itemExtent: 80.0,
                     itemCount: snapshots.data.documents.length,
