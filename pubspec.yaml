@@ -23,6 +23,7 @@ dependencies:
   image_picker:
   dropdownfield:
   nice_button:
+  flutter_speed_dial:
     
 
   flutter:

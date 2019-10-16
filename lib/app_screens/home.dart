@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:smart_shopping/operations/injection.dart';
 
 
 class Home extends StatelessWidget {
@@ -14,6 +16,8 @@ class Home extends StatelessWidget {
  int finalPrice;
  int unitPrice;
  String q;
+
+ 
 
 // look forward to implement
 //  calculatePrice(String q, int unitPrice){
@@ -38,7 +42,7 @@ class Home extends StatelessWidget {
   }
 
   Widget _buidList(BuildContext context, DocumentSnapshot document){
-    
+    String brand = document["brand"];
     return Row(
       // crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -51,7 +55,7 @@ class Home extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: IconButton( 
               icon: Icon(Icons.add),
-              onPressed: () =>_showDialog(context, document),
+              onPressed: () =>_showDialog(context, brand),
               )
               ),
               )
@@ -60,7 +64,7 @@ class Home extends StatelessWidget {
     );
   }
 
-    void _showDialog(context, document) {
+    void _showDialog(context, brand) {
     // flutter defined function
     showDialog(
       context: context,
@@ -82,6 +86,8 @@ class Home extends StatelessWidget {
              FlatButton(
               child: Text("Add"),
               onPressed: () {
+                print(brand);
+                Injections.cart.add(brand);
                 Navigator.of(context).pop();
               },
             ),
@@ -95,7 +101,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
+      drawer: Drawer(          
           elevation: 1.0,
           child: ListView(
             children: <Widget>[
@@ -136,14 +142,21 @@ class Home extends StatelessWidget {
                 ],
           ),
         ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: SpeedDial(
         elevation: 12.0,
-        onPressed: () {
-          Navigator.of(context).pushNamed('/billing');
-        },
-        child: Icon(Icons.shopping_cart),
+        child: Icon(Icons.menu),
         foregroundColor: Colors.white,
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: Colors.blue,
+        children: [
+          SpeedDialChild(
+            child: Icon(Icons.shopping_cart),
+            onTap: () => Navigator.of(context).pushNamed('/cart')
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.scanner),
+            onTap: () => Navigator.of(context).pushNamed('/billing')
+          )
+        ],
       ),
       body: DefaultTabController(
         length: 2,
