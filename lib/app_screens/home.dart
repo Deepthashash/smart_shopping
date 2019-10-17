@@ -3,12 +3,13 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:smart_shopping/operations/injection.dart';
+import 'package:smart_shopping/operations/calculations.dart';
 
 
 class Home extends StatelessWidget {
  Home({this.auth, this.onSignedOut});
 
-
+ Calculations cal = new Calculations();
 
  final BaseAuth auth;
  final VoidCallback onSignedOut;
@@ -43,6 +44,7 @@ class Home extends StatelessWidget {
 
   Widget _buidList(BuildContext context, DocumentSnapshot document){
     String brand = document["brand"];
+    int price = document["price"];
     return Row(
       // crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -55,7 +57,7 @@ class Home extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: IconButton( 
               icon: Icon(Icons.add),
-              onPressed: () =>_showDialog(context, brand),
+              onPressed: () =>_showDialog(context, brand, price),
               )
               ),
               )
@@ -64,7 +66,7 @@ class Home extends StatelessWidget {
     );
   }
 
-    void _showDialog(context, brand) {
+    void _showDialog(context, brand, price) {
     // flutter defined function
     showDialog(
       context: context,
@@ -72,8 +74,12 @@ class Home extends StatelessWidget {
         // return object of type Dialog
         return AlertDialog(
           title:  Text("Enter the quantity"),
-          content:  TextFormField(
-            onSaved: (value) => q = value,
+          content:  TextField(
+            onChanged: (value){
+              setState(){
+                Calculations.quantity = int.parse(value);
+              }
+            }
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
@@ -87,7 +93,11 @@ class Home extends StatelessWidget {
               child: Text("Add"),
               onPressed: () {
                 print(brand);
+                // print(price);
                 Injections.cart.add(brand);
+                Calculations.price = price;
+                print(Calculations.price);
+                print(Calculations.quantity);
                 Navigator.of(context).pop();
               },
             ),

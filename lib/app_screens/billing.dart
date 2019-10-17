@@ -67,17 +67,17 @@ class _Billing extends State<Billing> {
 
   
   onBarcode(barcode, context) async {
-    // showDialog(
-    //   builder: (context) => Column(
-    //     crossAxisAlignment: CrossAxisAlignment.center,
-    //     mainAxisAlignment: MainAxisAlignment.center,
-    //     children: <Widget>[
-    //       CircularProgressIndicator(),
-    //     ],
-    //   ),
-    //   context: context,
-    //   barrierDismissible: false,
-    // );
+    showDialog(
+      builder: (context) => Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          CircularProgressIndicator(),
+        ],
+      ),
+      context: context,
+      barrierDismissible: false,
+    );
     qs = await Firestore.instance
         .collection('Barcode_details')
         .document(barcode).get();
@@ -85,8 +85,7 @@ class _Billing extends State<Billing> {
 
   onScan(context) async {
     try {
-      String barcode = "123456789";
-          // await FlutterBarcodeScanner.scanBarcode('#34eb7d', 'close', true);
+      String barcode = await FlutterBarcodeScanner.scanBarcode('#34eb7d', 'close', true);
       setState(() {
         this.barcode = barcode;
       });
