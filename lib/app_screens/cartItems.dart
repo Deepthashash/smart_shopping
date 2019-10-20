@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_shopping/operations/injection.dart';
 import 'package:smart_shopping/operations/calculations.dart';
+import 'package:smart_shopping/app_screens/home.dart';
 
 class CartItems extends StatefulWidget {
 
@@ -13,20 +14,35 @@ class CartItems extends StatefulWidget {
 class _CartItems extends State<CartItems> {
 
   List<String> cartGet = [];
+  List<int> priceGet = [];
+  int price = 0;
+  int total = 0;
   Calculations cal = new Calculations();
+  Home val = new Home();
 
     @override
     void initState() {
     setState(() {
       cartGet = Injections.cart;
+      priceGet = Injections.priceList;
     });
     }
 
     void delete(index){
       setState(() {
         cartGet.removeAt(index);
+        priceGet.removeAt(index);
       });
     }
+
+    void clear(){
+      setState(() {
+        cartGet.clear();
+        priceGet.clear();
+        Calculations.temp1 = 2;
+      });
+    }
+
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +56,7 @@ class _CartItems extends State<CartItems> {
                       itemExtent: 80.0,
                       itemCount: Injections.cart.length,
                       itemBuilder: (context, index) =>
-                        _buidList(context, cartGet, index),
+                        _buidList(context, cartGet, priceGet, index),
                     ),
       bottomSheet: Container(
         height: 100,
@@ -90,7 +106,7 @@ class _CartItems extends State<CartItems> {
                         color: Colors.red,
                         child: Text("Cancel",style: TextStyle(fontWeight: FontWeight.bold)),
                         onPressed: () {
-                          Calculations.price = 0;
+                          clear();
                         },),
                     )
                   ),
@@ -106,7 +122,7 @@ class _CartItems extends State<CartItems> {
 
 
 
-Widget _buidList(BuildContext context, List cart, index){
+Widget _buidList(BuildContext context, List cart, List priceE, index){
 
 
     
@@ -114,9 +130,12 @@ Widget _buidList(BuildContext context, List cart, index){
       children: <Widget>[
         ListTile(
           title: Text(cart[index]),
+          subtitle: Text(priceE[index].toString()),
           trailing: IconButton(
             icon: Icon(Icons.delete),
             onPressed: (){
+              Calculations.reducePrice = priceGet[index];
+              Calculations.temp1 = 1;
               delete(index);
             }
             

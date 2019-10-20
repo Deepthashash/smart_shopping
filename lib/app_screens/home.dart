@@ -36,6 +36,14 @@ class Home extends StatelessWidget {
    }
  }
 
+ int setValue(String brand,int price){
+       
+   Injections.cart.add(brand);
+   Injections.priceList.add(price);
+   Calculations.price = price;
+   Calculations.quantity = int.parse(q);
+ }
+
   BoxDecoration myBoxDecoration() {
     return BoxDecoration(
       border: Border.all(width: 0),
@@ -74,12 +82,8 @@ class Home extends StatelessWidget {
         // return object of type Dialog
         return AlertDialog(
           title:  Text("Enter the quantity"),
-          content:  TextField(
-            onChanged: (value){
-              setState(){
-                Calculations.quantity = int.parse(value);
-              }
-            }
+          content:  TextField(            
+            onChanged: (value) => q = value,
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
@@ -93,11 +97,7 @@ class Home extends StatelessWidget {
               child: Text("Add"),
               onPressed: () {
                 print(brand);
-                // print(price);
-                Injections.cart.add(brand);
-                Calculations.price = price;
-                print(Calculations.price);
-                print(Calculations.quantity);
+                setValue(brand, price);
                 Navigator.of(context).pop();
               },
             ),
