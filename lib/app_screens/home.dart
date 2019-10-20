@@ -40,8 +40,9 @@ class Home extends StatelessWidget {
        
    Injections.cart.add(brand);
    Injections.priceList.add(price);
-   Calculations.price = price;
-   Calculations.quantity = int.parse(q);
+   Injections.quantityList.add(int.parse(q));
+   finalPrice = price * int.parse(q);
+   Calculations.finalPrice.add(finalPrice);
  }
 
   BoxDecoration myBoxDecoration() {

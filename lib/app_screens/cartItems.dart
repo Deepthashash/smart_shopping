@@ -15,6 +15,7 @@ class _CartItems extends State<CartItems> {
 
   List<String> cartGet = [];
   List<int> priceGet = [];
+  List<int> quantityGet = [];
   int price = 0;
   int total = 0;
   Calculations cal = new Calculations();
@@ -25,6 +26,7 @@ class _CartItems extends State<CartItems> {
     setState(() {
       cartGet = Injections.cart;
       priceGet = Injections.priceList;
+      quantityGet = Injections.quantityList;
     });
     }
 
@@ -39,6 +41,7 @@ class _CartItems extends State<CartItems> {
       setState(() {
         cartGet.clear();
         priceGet.clear();
+        Calculations.finalPrice.clear();
         Calculations.temp1 = 2;
       });
     }
@@ -56,7 +59,7 @@ class _CartItems extends State<CartItems> {
                       itemExtent: 80.0,
                       itemCount: Injections.cart.length,
                       itemBuilder: (context, index) =>
-                        _buidList(context, cartGet, priceGet, index),
+                        _buidList(context, cartGet, priceGet, quantityGet, index),
                     ),
       bottomSheet: Container(
         height: 100,
@@ -122,7 +125,7 @@ class _CartItems extends State<CartItems> {
 
 
 
-Widget _buidList(BuildContext context, List cart, List priceE, index){
+Widget _buidList(BuildContext context, List cart, List priceE, List quantityGet, index){
 
 
     
@@ -134,7 +137,7 @@ Widget _buidList(BuildContext context, List cart, List priceE, index){
           trailing: IconButton(
             icon: Icon(Icons.delete),
             onPressed: (){
-              Calculations.reducePrice = priceGet[index];
+              Calculations.reducePrice = priceGet[index] * quantityGet[index];
               Calculations.temp1 = 1;
               delete(index);
             }
