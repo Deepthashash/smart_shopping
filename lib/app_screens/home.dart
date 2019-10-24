@@ -177,7 +177,7 @@ class Home extends StatelessWidget {
               SliverAppBar(
                 expandedHeight: 200.0,
                 floating: true,
-                pinned: false,
+                pinned: true,
                 
                 flexibleSpace: FlexibleSpaceBar(
                     centerTitle: true,
@@ -190,7 +190,8 @@ class Home extends StatelessWidget {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    background: Image.asset("assets/images/image2.jpg")),
+                    // background: Image.asset("assets/images/image2.jpg")
+                    ),
                 bottom: TabBar(
                   labelColor: Colors.black87,
                   unselectedLabelColor: Colors.grey,

@@ -34,6 +34,7 @@ class _CartItems extends State<CartItems> {
       setState(() {
         cartGet.removeAt(index);
         priceGet.removeAt(index);
+        quantityGet.removeAt(index);
       });
     }
 
@@ -41,6 +42,7 @@ class _CartItems extends State<CartItems> {
       setState(() {
         cartGet.clear();
         priceGet.clear();
+        quantityGet.clear();
         Calculations.finalPrice.clear();
         Calculations.temp1 = 2;
       });
@@ -132,6 +134,7 @@ Widget _buidList(BuildContext context, List cart, List priceE, List quantityGet,
     return ListView(
       children: <Widget>[
         ListTile(
+          leading: Text(quantityGet[index].toString()),
           title: Text(cart[index]),
           subtitle: Text(priceE[index].toString()),
           trailing: IconButton(

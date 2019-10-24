@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:smart_shopping/operations/injection2.dart';
 
 class Billing extends StatefulWidget {
   @override
@@ -11,61 +12,18 @@ class Billing extends StatefulWidget {
 class _Billing extends State<Billing> {
   var barcode = '';
   DocumentSnapshot qs;
-  Widget detailsWidget = Expanded(
-    child:ListView(
-      children: <Widget>[
-        ListTile(
-          title: Text("Rs: 55.00"),
-          leading: Text("Bread"),
-          trailing: IconButton(
-            icon: Icon(Icons.close),
-             onPressed: () {},
-        ),
-        ),
-        ListTile(
-          title: Text("Rs: 55.00"),
-          leading: Text("Bread"),
-          trailing: IconButton(
-            icon: Icon(Icons.close),
-             onPressed: () {},
-        ),
-        ),
-        ListTile(
-          title: Text("Rs: 55.00"),
-          leading: Text("Bread"),
-          trailing: IconButton(
-            icon: Icon(Icons.close),
-             onPressed: () {},
-        ),
-        ), 
-        ButtonBar(
-          children: <Widget>[
-            RaisedButton(
-              onPressed: null,
-              child: Column( // Replace with a Row for horizontal icon + text
-                  children: <Widget>[
-                    Icon(Icons.check),
-                    Text("Accept")
-                  ],
-                ),
-            ),
-            RaisedButton(
-              onPressed: null,
-              child: Column( // Replace with a Row for horizontal icon + text
-                  children: <Widget>[
-                    Icon(Icons.cancel),
-                    Text("Cancel")
-                  ],
-                ),
-            ),
-          ],
-        ) 
-      ],
-    ),
-  );
- 
+  List<String> brandGet = [];
+  List<int> priceGet = [];
 
-  
+   @override
+    void initState() {
+    setState(() {
+      brandGet = Injections2.brandList;
+      priceGet = Injections2.priceList;
+    });
+    }
+
+    
   onBarcode(barcode, context) async {
     showDialog(
       builder: (context) => Column(
@@ -81,6 +39,14 @@ class _Billing extends State<Billing> {
     qs = await Firestore.instance
         .collection('Barcode_details')
         .document(barcode).get();
+    
+  }
+
+  addToList(qs){
+    if(qs != null){
+      Injections2.brandList.add(qs.data["brand"]);
+      Injections2.priceList.add(qs.data["price"]);
+    }
   }
 
   onScan(context) async {
@@ -101,7 +67,12 @@ class _Billing extends State<Billing> {
       appBar: AppBar(
         title: Text('Scan here'),
       ),
-      body: _barData(qs),
+      body: ListView.builder(
+                      itemExtent: 80.0,
+                      itemCount: Injections2.brandList.length,
+                      itemBuilder: (context, index) =>
+                        _buidList(context, priceGet, brandGet, index),
+                    ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => onScan(context),
         child: Icon(Icons.scanner),
@@ -110,33 +81,25 @@ class _Billing extends State<Billing> {
   }
 }
 
-  Widget _barData(qs) {
-    if (qs != null) {
-      return ListView(
-        children: <Widget>[
-            Row(
-            children: <Widget>[
-              Expanded(
-                  child: ListTile(
-                title: Text(qs.data["brand"]),
-                subtitle: Text("Rs." + qs.data["price"].toString()),
-              )),
-              Expanded(
-                  child: Container(
-                alignment: Alignment.centerRight,
-                child: IconButton(
-                  icon: Icon(Icons.close),
-                  onPressed: () {
-                  },
-                ),
-              )),
-            ],
-          ),
-          
-        ],
-      );
-    } else {
-      return (Center(child: Text("No Data!!")));
-    }
-  }
 
+Widget _buidList(BuildContext context, List price, List brand, index){
+   
+    return ListView(
+      children: <Widget>[
+        ListTile(
+          // leading: Text(quantityGet[index].toString()),
+          title: Text(brand[index]),
+          subtitle: Text(price[index].toString()),
+          trailing: IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: (){
+              // Calculations.reducePrice = priceGet[index] * quantityGet[index];
+              // Calculations.temp1 = 1;
+              // delete(index);
+            }
+            
+          ),
+        )
+      ],
+    );
+}
