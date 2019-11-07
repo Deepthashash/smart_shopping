@@ -36,9 +36,11 @@ class _Billing extends State<Billing> {
       context: context,
       barrierDismissible: false,
     );
-    qs = await Firestore.instance
-        .collection('Barcode_details')
-        .document(barcode).get();
+    // qs = await Firestore.instance
+    //     .collection('Barcode_details')
+    //     .document(barcode).get();
+    // addToList(qs);
+    print(barcode);
     
   }
 

@@ -252,7 +252,7 @@ class _LoginState extends State<Login> {
     } else {
       return Scaffold(
           appBar: AppBar(
-            title: Text("Keells"),
+            title: Text("SmartMart"),
             backgroundColor: Colors.greenAccent,
           ),
           body: Center(

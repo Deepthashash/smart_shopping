@@ -123,28 +123,33 @@ class _CartItems extends State<CartItems> {
       ),            
     );
   }
+BoxDecoration myBoxDecoration() {
+    return BoxDecoration(
+      border: Border.all(width: 3),
+      borderRadius: const BorderRadius.all(Radius.circular(8)),
+    );
+  }
 
 
 
-
-Widget _buidList(BuildContext context, List cart, List priceE, List quantityGet, index){
-
-
-    
+Widget _buidList(BuildContext context, List cart, List priceE, List quantityGet, index){    
     return ListView(
       children: <Widget>[
-        ListTile(
-          leading: Text(quantityGet[index].toString()),
-          title: Text(cart[index]),
-          subtitle: Text(priceE[index].toString()),
-          trailing: IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: (){
-              Calculations.reducePrice = priceGet[index] * quantityGet[index];
-              Calculations.temp1 = 1;
-              delete(index);
-            }
-            
+        Container(
+          decoration: myBoxDecoration(),
+          child: ListTile(
+            leading: Text(quantityGet[index].toString(),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+            title: Text(cart[index],style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+            subtitle: Text(priceE[index].toString(),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+            trailing: IconButton(
+              icon: Icon(Icons.delete,size: 25.0,),
+              onPressed: (){
+                Calculations.reducePrice = priceGet[index] * quantityGet[index];
+                Calculations.temp1 = 1;
+                delete(index);
+              }
+              
+            ),
           ),
         )
       ],

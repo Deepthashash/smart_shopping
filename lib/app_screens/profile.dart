@@ -11,43 +11,23 @@ class _ProfileState extends State<Profile> {
   DocumentSnapshot snpshot;
   Services ser = Services();
 
-//   @override
-//   void initState(){
-//     super.initState();
-//    ser.getData().then((xxx){
-//     emailg = xxx;
-// });
-//   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.greenAccent,
+        backgroundColor: Colors.blue,
         title: Text("Profile"),
       ),
       body: _profData(),
-      //     ListView(
-      //   children: <Widget>[
-      //     Text(emailg),
-      //     StreamBuilder(
-      //       stream: Firestore.instance
-      //           .collection("Data")
-      //           .document(emailg)
-      //           .snapshots(),
-      //       builder: (BuildContext context,
-      //           AsyncSnapshot<DocumentSnapshot> snapshot) {
-      //         if (!snapshot.hasData)
-      //           return new Container(
-      //               child: Center(
-      //             child: Text("Loading..."),
-      //           ));
+    );
+  }
 
-      //         return TaskList(documents: snapshot.data.documents);
-      //       },
-      //     )
-      //   ],
-      // )
+    BoxDecoration myBoxDecoration() {
+    return BoxDecoration(
+      image: DecorationImage(image: AssetImage("assets/images/save1.jpeg"),fit: BoxFit.cover),
+      border: Border.all(width: 3),
+      borderRadius: const BorderRadius.all(Radius.circular(108)),
     );
   }
 
@@ -66,33 +46,23 @@ class _ProfileState extends State<Profile> {
     if (snpshot != null) {
       return ListView(
         children: <Widget>[
-          // SizedBox( 
-          //   height: 150.0,
-          //   child: Container(
-          //     decoration: BoxDecoration(
-          // image: DecorationImage(
-          //   image:  ExactAssetImage('assets/dog.png'),
-          //   fit: BoxFit.cover,
-          // ),
-          //     ),
-          //     alignment: Alignment.center,
-          //     width: 50.0,
-          //     height: 50.0,
-          //     child: Text("Prof pic comes here"),
-          //   ),
-          // ),
+          Container(margin: EdgeInsets.all(75.0),
+            decoration: myBoxDecoration(),
+            width: 100.0,
+            height: 200.0,
+          ),
           Row(
             children: <Widget>[
               Expanded(
                   child: ListTile(
-                title: Text("Profile name"),
-                subtitle: Text(snpshot.data["profname"]),
+                title: Text("Profile name",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+                subtitle: Text(snpshot.data["profname"],style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
               )),
               Expanded(
                   child: Container(
                 alignment: Alignment.centerRight,
                 child: IconButton(
-                  icon: Icon(Icons.edit),
+                  icon: Icon(Icons.edit,size: 40.0,),
                   onPressed: () {
                     print("filled background");
                   },
@@ -104,14 +74,14 @@ class _ProfileState extends State<Profile> {
             children: <Widget>[
               Expanded(
                   child: ListTile(
-                title: Text("NIC number"),
-                subtitle: Text(snpshot.data["NIC"]),
+                title: Text("NIC number",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+                subtitle: Text(snpshot.data["NIC"],style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
               )),
               Expanded(
                   child: Container(
                 alignment: Alignment.centerRight,
                 child: IconButton(
-                  icon: Icon(Icons.lock_outline),
+                  icon: Icon(Icons.lock_outline,size: 40.0,), onPressed: () {},
                 ),
               )),
             ],
@@ -120,14 +90,14 @@ class _ProfileState extends State<Profile> {
             children: <Widget>[
               Expanded(
                   child: ListTile(
-                title: Text("Card number"),
-                subtitle: Text(snpshot.data["Nexus"]),
+                title: Text("Card number",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+                subtitle: Text(snpshot.data["Nexus"],style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
               )),
               Expanded(
                   child: Container(
                 alignment: Alignment.centerRight,
                 child: IconButton(
-                  icon: Icon(Icons.lock_outline),
+                  icon: Icon(Icons.lock_outline,size: 40.0,), onPressed: () {},
                 ),
               )),
             ],
@@ -136,14 +106,14 @@ class _ProfileState extends State<Profile> {
             children: <Widget>[
               Expanded(
                   child: ListTile(
-                title: Text("Wallet Balance"),
+                title: Text("Wallet Balance",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
                 subtitle: Text(snpshot.data["Wallet_balance"].toString()),
               )),
               Expanded(
                   child: Container(
                 alignment: Alignment.centerRight,
                 child: IconButton(
-                  icon: Icon(Icons.lock_outline),
+                  icon: Icon(Icons.lock_outline,size: 40.0,), onPressed: () {},
                 ),
               )),
             ],
@@ -155,18 +125,3 @@ class _ProfileState extends State<Profile> {
     }
   }
 }
-//  class TaskList extends StatelessWidget {
-//   TaskList({this.documents});
-//   final List<DocumentSnapshot> documents;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ListView.builder(
-//       itemCount: documents.length,
-//       itemBuilder: (BuildContext context, int i){
-//         String title = documents[i].data['title'].toString();
-//         return Text(title);
-//       },
-//     );
-//   }
-//}

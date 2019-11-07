@@ -8,6 +8,7 @@ import './app_screens/root.dart';
 import './app_screens/billing.dart';
 import './app_screens/profile.dart';
 import './app_screens/cartItems.dart';
+import './app_screens/rating.dart';
 
 
 void main(){
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget{
           '/billing': (BuildContext context)=> Billing(),
           '/profile': (BuildContext context)=> Profile(),
           '/cart': (BuildContext context)=> CartItems(),
+          '/rating': (BuildContext context)=> Rating(),
         }
     );
   }

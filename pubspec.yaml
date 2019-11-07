@@ -24,7 +24,9 @@ dependencies:
   dropdownfield:
   nice_button:
   flutter_speed_dial:
-    
+  carousel_slider:
+  flutter_rating_bar:
+     
 
   flutter:
     sdk: flutter

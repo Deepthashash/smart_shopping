@@ -4,39 +4,43 @@ import 'auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:smart_shopping/operations/injection.dart';
 import 'package:smart_shopping/operations/calculations.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 
-class Home extends StatelessWidget {
+
+class Home extends StatefulWidget {
  Home({this.auth, this.onSignedOut});
-
- Calculations cal = new Calculations();
 
  final BaseAuth auth;
  final VoidCallback onSignedOut;
+
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+ Calculations cal = new Calculations();
+
  int quantity;
+
  int finalPrice;
+
  int unitPrice;
+
  String q;
 
- 
-
-// look forward to implement
-//  calculatePrice(String q, int unitPrice){
-//    quantity = int.parse(q);
-//    finalPrice = finalPrice + (quantity * unitPrice);
-//    print("finalPrice");
-//  }
+ int result = 0;
 
  Future _signOut() async {
    try {
-     await auth.signOut();
-     onSignedOut();
+     await widget.auth.signOut();
+     widget.onSignedOut();
    } catch (e) {
      print(e);
    }
  }
 
- int setValue(String brand,int price){
+  setValue(String brand,int price){
        
    Injections.cart.add(brand);
    Injections.priceList.add(price);
@@ -47,31 +51,52 @@ class Home extends StatelessWidget {
 
   BoxDecoration myBoxDecoration() {
     return BoxDecoration(
-      border: Border.all(width: 0),
+      border: Border.all(width: 3),
+      borderRadius: const BorderRadius.all(Radius.circular(8)),
     );
   }
 
-  Widget _buidList(BuildContext context, DocumentSnapshot document){
+  final List<String> imgList = [
+    'assets/images/image1.jpg',
+    'assets/images/image4.jpg',
+    'assets/images/image3.jpg',
+    'assets/images/dis1.jpeg',
+    'assets/images/image2.jpg',
+ ];
+
+  Widget _buidList(BuildContext context, DocumentSnapshot document){    
     String brand = document["brand"];
     int price = document["price"];
-    return Row(
-      // crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Expanded(child: ListTile(
-          title: Text(document['brand']),
-          subtitle: Text("Rs. "+document['price'].toString()),          
-          )),
-        Expanded(
-          child: Container(
-            alignment: Alignment.centerRight,
-            child: IconButton( 
-              icon: Icon(Icons.add),
-              onPressed: () =>_showDialog(context, brand, price),
-              )
-              ),
-              )
-        
-      ],
+    return Container(
+      child: Column(
+        children: <Widget>[
+          Container(
+            decoration: myBoxDecoration(),
+            child: Row(
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                    child: ListTile(
+                    title: Text(document['brand'],style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+                    subtitle: Text("Rs. "+document['price'].toString(),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+                  )),
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.only(left: 125.0,right: 5.0),
+                    decoration: myBoxDecoration(),
+                    alignment: Alignment.centerRight,
+                    child: IconButton( 
+                      icon: Icon(Icons.add),
+                      onPressed: () =>_showDialog(context, brand, price),
+                      )
+                      ),
+                      )
+                
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -107,7 +132,6 @@ class Home extends StatelessWidget {
       },
     );
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -119,33 +143,39 @@ class Home extends StatelessWidget {
               DrawerHeader(
               margin: EdgeInsets.only(bottom: 2.0),
               // padding: EdgeInsets.all(5.0),
-              child: Text('Smart Shopping',
+              child: Text('SmartMart',
               style: TextStyle(
                         color: Colors.white,
-                        fontSize: 35.0,)),
+                        fontSize: 50.0,)),
               decoration: BoxDecoration(
               color: Colors.blue,
               )
               ),              
               ListTile(
-                  title: Text("Your Profile"),
-                  trailing: Icon(Icons.account_box),
+                  title: Text("Your Profile",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+                  trailing: Icon(Icons.account_box,size: 50.0),
                   onTap: () {
                     Navigator.of(context).pushNamed('/profile');
                   }),
               ListTile(
-                  title: Text("Settings"),
-                  trailing: Icon(Icons.settings),
+                  title: Text("Settings",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+                  trailing: Icon(Icons.settings,size: 50.0,),
                   onTap: () {
                     Navigator.of(context).pushNamed('/settings');
                   }),
+              ListTile(
+                title: Text("Rate us",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+                trailing: Icon(Icons.star_border,size: 50.0,),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/rating');
+                }),
               RaisedButton(
                     color: Colors.black87,
                     shape: RoundedRectangleBorder(
                         side: BorderSide(color: Colors.white)),
                     elevation: 1.0,
                     child: Text(
-                      "SignOut",
+                      "SignOut",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)
                     ),
                     textColor: Colors.white,
                     onPressed: _signOut,
@@ -183,7 +213,7 @@ class Home extends StatelessWidget {
                     centerTitle: true,
                     titlePadding: EdgeInsets.only(bottom: 80.0),
                     title: Text(
-                      "Smart Shopping",
+                      "SmartMart",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20.0,
@@ -213,82 +243,51 @@ class Home extends StatelessWidget {
               GridView.count(
                 primary: false,
                 padding: const EdgeInsets.all(5.0),
-                crossAxisSpacing: 5.0,
-                crossAxisCount: 2,
+                crossAxisSpacing: 1.0,
+                crossAxisCount: 1,
                 children: <Widget>[
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: myBoxDecoration(),
-                    child: Image.asset("assets/images/image2.jpg")
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: myBoxDecoration(),
-                    child: Text("Hello"),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: myBoxDecoration(),
-                    child: Text("Hello"),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: myBoxDecoration(),
-                    child: Text("Hello"),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: myBoxDecoration(),
-                    child: Text("Hello"),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: myBoxDecoration(),
-                    child: Text("Hello"),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: myBoxDecoration(),
-                    child: Text("Hello"),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: myBoxDecoration(),
-                    child: Text("Hello"),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: myBoxDecoration(),
-                    child: Text("Hello"),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: myBoxDecoration(),
-                    child: Text("Hello"),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: myBoxDecoration(),
-                    child: Text("Hello"),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: myBoxDecoration(),
-                    child: Text("Hello"),
-                  ),
+                  CarouselSlider(
+                    autoPlay: true,
+                    enlargeCenterPage: true,
+                    pauseAutoPlayOnTouch: const Duration(seconds: 2),
+                    autoPlayInterval: const Duration(seconds: 5),
+                    height: 300.0,
+                    items: [0,1,2,3,4].map((i) {
+                      return Builder(
+                          builder: (BuildContext context) {
+                            return Container(
+                              width: MediaQuery.of(context).size.width,
+                              margin: EdgeInsets.symmetric(horizontal: 5.0),
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                                image: DecorationImage(image: AssetImage(imgList[i]),fit: BoxFit.cover)
+                                // color: Colors.amber
+                              ),
+                              // child: Text('text $i', style: TextStyle(fontSize: 16.0),)
+                            );
+                          },
+                        );
+                      }).toList(),
+                    )
+                  
                 ],
               ),
-              StreamBuilder(
-                stream: Firestore.instance.collection("Barcode_details").snapshots(),
-                builder: (context, snapshots){
-                  if(!snapshots.hasData) return Center(child: CircularProgressIndicator());   
-                  return ListView.builder(
-                    itemExtent: 80.0,
-                    itemCount: snapshots.data.documents.length,
-                    itemBuilder: (context, index) =>
-                      _buidList(context, snapshots.data.documents[index]),
-                  );
-                },
+              GridView.count(
+                crossAxisCount: 1,
+                children: <Widget>[
+                  StreamBuilder(
+                    stream: Firestore.instance.collection("Barcode_details").snapshots(),
+                    builder: (context, snapshots){
+                      if(!snapshots.hasData) return Center(child: CircularProgressIndicator());   
+                      return ListView.builder(
+                        itemExtent: 80.0,
+                        itemCount: snapshots.data.documents.length,
+                        itemBuilder: (context, index) =>
+                          _buidList(context, snapshots.data.documents[index]),
+                      );
+                    },
+                  ),
+                ],
               )
           
             ],
