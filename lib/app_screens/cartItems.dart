@@ -132,19 +132,19 @@ BoxDecoration myBoxDecoration() {
 
 
 
-Widget _buidList(BuildContext context, List cart, List priceE, List quantityGet, index){    
+Widget _buidList(BuildContext context, List cart, List priceE, List quant, index){    
     return ListView(
       children: <Widget>[
         Container(
           decoration: myBoxDecoration(),
           child: ListTile(
-            leading: Text(quantityGet[index].toString(),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+            leading: Text(quant[index].toString(),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
             title: Text(cart[index],style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
             subtitle: Text(priceE[index].toString(),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
             trailing: IconButton(
               icon: Icon(Icons.delete,size: 25.0,),
               onPressed: (){
-                Calculations.reducePrice = priceGet[index] * quantityGet[index];
+                Calculations.reducePrice = priceE[index] * quant[index];
                 Calculations.temp1 = 1;
                 delete(index);
               }
