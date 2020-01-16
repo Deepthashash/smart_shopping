@@ -125,8 +125,7 @@ class _Billing extends State<Billing> {
 
   onScan(context) async {
     try {
-      String barcode = '123';
-      // await FlutterBarcodeScanner.scanBarcode('#34eb7d', 'close', true);
+      String barcode = await FlutterBarcodeScanner.scanBarcode('#34eb7d', 'close', true);
       setState(() {
         this.barcode = 'barcode';
       });
