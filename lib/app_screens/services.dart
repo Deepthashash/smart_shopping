@@ -24,13 +24,13 @@ class Services{
     return await Firestore.instance.collection("Users").document(user.email).get();
   }
 
-  addRatings(String _comment,double _rating) async {
+  addRatings(String comment,double _rating) async {
     FirebaseUser user = await FirebaseAuth.instance.currentUser();
     CollectionReference colref = Firestore.instance.collection("Rating");
     Map<String, dynamic> details = {
       "userEmail": user.email,
       "rating": _rating,
-      "comment": _comment,
+      "comment": comment,
     };
     colref.add(details).whenComplete(() {
       print("done");

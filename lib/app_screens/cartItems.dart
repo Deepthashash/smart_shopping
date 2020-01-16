@@ -146,7 +146,7 @@ class _CartItems extends State<CartItems> {
   }
 
    void _showDialog() {
-    String _comment;
+    String comment = "";
     var _ratingController = TextEditingController();
     double _userRating = 3.0;
     double _rating = 3.0;
@@ -264,7 +264,7 @@ class _CartItems extends State<CartItems> {
                           ),
                           border: UnderlineInputBorder(),
                         ),
-                        onChanged: (value) => _comment = value, 
+                        onChanged: (value) => comment = value, 
                         // onFieldSubmitted: (val) => _comment = val,
                       ),
               ),
@@ -280,10 +280,10 @@ class _CartItems extends State<CartItems> {
                       child: Text("Submit",style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                      onPressed: (){
                         print(_rating);
-                        print(_comment);
+                        print(comment);
                         // (_rating).toInt();
-                        ser.addRatings(_comment,_rating);
-                        Navigator.pop(context);
+                        ser.addRatings(comment,_rating);
+                        Navigator.of(context).pop();
                      },
                   )
                   )
