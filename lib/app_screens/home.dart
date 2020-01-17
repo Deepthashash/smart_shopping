@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:smart_shopping/operations/injection.dart';
 import 'package:smart_shopping/operations/calculations.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class Home extends StatefulWidget {
@@ -30,6 +30,8 @@ class _HomeState extends State<Home> {
  String q;
 
  int result = 0;
+ 
+ final db = Firestore.instance;
 
  Future _signOut() async {
    try {
@@ -49,6 +51,13 @@ class _HomeState extends State<Home> {
    Calculations.finalPrice.add(finalPrice);
  }
 
+  _updateData(int stock, String docID) async {
+    await db
+        .collection('Barcode_details')
+        .document(docID)
+        .updateData({'stock': stock});
+  }
+
   BoxDecoration myBoxDecoration() {
     return BoxDecoration(
       border: Border.all(width: 3),
@@ -67,40 +76,81 @@ class _HomeState extends State<Home> {
   Widget _buidList(BuildContext context, DocumentSnapshot document){    
     String brand = document["brand"];
     int price = document["price"];
-    return Container(
-      child: Column(
+    int stock = document["stock"];
+    
+    return 
+    // Container(
+    //   child: Column(
+    //     children: <Widget>[
+    //       Container(
+    //         decoration: myBoxDecoration(),
+    //         child: Center(
+    // child:
+     Card(
+      child: InkWell(
+        splashColor: Colors.blue.withAlpha(30),
+        onTap: () {
+          if(stock<1){
+            print("Out of stock");
+          }else{
+            _showDialog(context, brand, price, stock, document.documentID);
+          }
+        },
+        child:  Row(
+        mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          Container(
-            decoration: myBoxDecoration(),
-            child: Row(
-              // crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Expanded(
-                    child: ListTile(
-                    title: Text(document['brand'],style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                    subtitle: Text("Rs. "+document['price'].toString(),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                  )),
-                Expanded(
-                  child: Container(
-                    margin: EdgeInsets.only(left: 125.0,right: 5.0),
-                    decoration: myBoxDecoration(),
-                    alignment: Alignment.centerRight,
-                    child: IconButton( 
-                      icon: Icon(Icons.add),
-                      onPressed: () =>_showDialog(context, brand, price),
-                      )
-                      ),
-                      )
-                
-              ],
+          Expanded(
+            child: Container(
+              // width: 1000,
+              child: ListTile(
+                leading: Icon(Icons.album),
+                title: Text(brand,style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+                subtitle: Text("Rs."+price.toString(),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)),
+              ),
             ),
           ),
-        ],
-      ),
+          Container(   
+            width: 100,         
+            margin: EdgeInsets.only(left: 10.0,right: 5.0),
+            alignment: Alignment.centerRight,
+
+            child: Text(stock.toString()+"pcs",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold)))
+            
+        ]
+        )
+      )
     );
+  // )
+            
+            // Row(
+            //   // crossAxisAlignment: CrossAxisAlignment.center,
+            //   children: <Widget>[
+            //     Expanded(
+            //         child: ListTile(
+            //         title: Text(document['brand'],style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+            //         subtitle: Text("Rs. "+document['price'].toString(),style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+            //       )),
+            //     Expanded(
+            //       child: Container(
+            //         margin: EdgeInsets.only(left: 125.0,right: 5.0),
+            //         decoration: myBoxDecoration(),
+            //         alignment: Alignment.centerRight,
+            //         child: IconButton( 
+            //           icon: Icon(Icons.add),
+            //           onPressed: () =>_showDialog(context, brand, price),
+            //           )
+            //           ),
+            //           )
+                
+            //   ],
+            // ),
+    //       ),
+    //     ],
+    //   ),
+    // );
   }
 
-    void _showDialog(context, brand, price) {
+    void _showDialog(context, brand, price, stock, docId) {
     // flutter defined function
     showDialog(
       context: context,
@@ -124,6 +174,8 @@ class _HomeState extends State<Home> {
               onPressed: () {
                 print(brand);
                 setValue(brand, price);
+                int newQ = stock - int.parse(q);
+                _updateData(newQ,docId);
                 Navigator.of(context).pop();
               },
             ),
